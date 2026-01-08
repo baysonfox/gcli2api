@@ -286,12 +286,15 @@ def convert_antigravity_response_to_openai(
 # ==================== API 路由 ====================
 
 @router.get("/antigravity/v1/models", response_model=ModelList)
-async def list_models():
+async def list_models(token: str = Depends(authenticate_bearer)):
     """
     返回OpenAI格式的模型列表
     
     动态从Antigravity API获取可用模型，并自动扩展抗截断版本
     
+    Args:
+        token: Bearer认证令牌
+        
     Returns:
         ModelList: 可用模型列表（包含原始模型和抗截断版本）
     """
